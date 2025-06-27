@@ -8,7 +8,7 @@ const linkSchema = new Schema(
     folderId: {
       type: Schema.Types.ObjectId,
       ref: "Folder",
-      required: true,
+      default: null,
     },
   },
   {

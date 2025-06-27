@@ -9,7 +9,7 @@ const authUser = async (req, res, next) => {
     }
 
     const tokenString = token.split(" ")[1];
-    jwt.verify(tokenString, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(tokenString, process.env.SECRET_KEY, (err, decoded) => {
         if (err) {
             return res
                 .status(403)

@@ -2,7 +2,7 @@ import mongoose, { Schema, model } from "mongoose";
 
 const folderSchema = new Schema(
   {
-    email: {
+    name: {
       type: String,
       required: true,
     },

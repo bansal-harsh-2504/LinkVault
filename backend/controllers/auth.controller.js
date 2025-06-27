@@ -1,4 +1,4 @@
-import { User } from "../models/User.js";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
@@ -32,7 +32,7 @@ export const registerUser = async (req, res) => {
         });
         return res.status(201).json({
             message: "Account created successfully",
-            success: true,
+            success: true
         });
     } catch (err) {
         console.log("Error in user Register controller. Error: ", err);

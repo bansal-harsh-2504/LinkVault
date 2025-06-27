@@ -4,7 +4,7 @@ import connectToDB from './config/connectToDB.js';
 import authRouter from './routes/auth.routes.js';
 import linkRouter from './routes/link.routes.js';
 import folderRouter from './routes/folder.routes.js';
-import authUser from './middleware/authUser.js';
+import authUser from './middleware/auth.js';
 import User from './models/User.js';
 
 import dotenv from 'dotenv';

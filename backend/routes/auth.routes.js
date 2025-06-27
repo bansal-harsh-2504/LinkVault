@@ -3,7 +3,7 @@ import express from "express";
 
 const authRouter = express.Router();
 
-authRouter.get("/login", loginUser);
-authRouter.get("/register", registerUser);
+authRouter.post("/login", loginUser);
+authRouter.post("/signup", registerUser);
 
 export default authRouter;
