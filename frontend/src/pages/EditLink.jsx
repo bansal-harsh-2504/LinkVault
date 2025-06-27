@@ -12,13 +12,15 @@ const EditLink = () => {
   const [notes, setNotes] = useState("");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [folder, setFolder] = useState(null);
+  const [folders, setFolders] = useState([]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await axios.put(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/links/${linkId}`,
-        { title, url, notes },
+        { title, url, notes, folderId: folder },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -29,6 +31,29 @@ const EditLink = () => {
       setError("Failed to update link.");
     }
   };
+
+  useEffect(() => {
+    if (isAuthLoading || !token) return;
+
+    const fetchFolders = async () => {
+      if (isAuthLoading || !token) return;
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/folders`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setFolders(res.data.data.folders);
+      } catch (err) {
+        console.error("Error fetching folders", err);
+      }
+    };
+
+    fetchFolders();
+  }, [isAuthLoading, token]);
 
   useEffect(() => {
     if (isAuthLoading || !token) return;
@@ -45,6 +70,7 @@ const EditLink = () => {
         setTitle(link.title || "");
         setUrl(link.url || "");
         setNotes(link.notes || "");
+        setFolder(link.folderId || null);
       } catch (err) {
         console.error("Failed to fetch link details", err);
         setError("Failed to fetch link.");
@@ -80,7 +106,6 @@ const EditLink = () => {
               id="title"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              required
               className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
           </div>
@@ -96,6 +121,22 @@ const EditLink = () => {
               required
               className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+          </div>
+          <div>
+            <label className="block mb-1 text-sm text-slate-700">Folder</label>
+            <select
+              value={folder ? folder : ""}
+              onChange={(e) => setFolder(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none"
+            >
+              <option value="">Select Folder</option>
+              {folders.length > 0 &&
+                folders.map((f) => (
+                  <option key={f._id} value={f._id}>
+                    {f.name}
+                  </option>
+                ))}
+            </select>
           </div>
           <div>
             <label htmlFor="notes" className="block font-medium text-slate-700">

@@ -76,7 +76,6 @@ const AddLink = () => {
           <div>
             <label className="block mb-1 text-sm text-slate-700">Title</label>
             <input
-              required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"

@@ -44,7 +44,7 @@ export const addLinkToFolder = async (req, res) => {
 
 export const updateLink = async (req, res) => {
     const { id: linkId } = req.params;
-    const { title, url, notes } = req.body;
+    const { title, url, notes, folderId } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(linkId)) {
         return res.status(400).json({ success: false, message: "Invalid link ID" });
@@ -53,7 +53,7 @@ export const updateLink = async (req, res) => {
     try {
         const updated = await Link.findByIdAndUpdate(
             linkId,
-            { $set: { title, url, notes } },
+            { $set: { title, url, notes, folderId } },
             { new: true }
         );
 
