@@ -34,7 +34,7 @@ export const addLinkToFolder = async (req, res) => {
             return res.status(409).json({ success: false, message: "Link already exists in this folder" });
         }
 
-        const newLink = new Link({ title, url, notes, folderId });
+        const newLink = new Link({ title: title || "", url, notes: notes || "", folderId });
         await newLink.save();
         res.status(201).json({ success: true, data: newLink });
     } catch (err) {
