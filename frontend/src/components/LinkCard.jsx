@@ -44,7 +44,7 @@ const LinkCard = ({ link, onDelete }) => {
               href={link.url}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:underline break-all line-clamp-1 truncate"
+              className="text-blue-600 hover:underline truncate max-w-[700px]"
               title={link.url}
             >
               {link.url}
