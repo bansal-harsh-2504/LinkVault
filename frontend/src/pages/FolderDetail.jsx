@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
-import { FaFolderOpen } from "react-icons/fa";
+import FolderCard from "../components/FolderCard";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
 import LinkCard from "../components/LinkCard";
@@ -58,7 +58,7 @@ const FolderDetail = () => {
               + Add Subfolder
             </button>
           </Link>
-          <Link to={`/add-link`}>
+          <Link to={folderId ? `/add-link/${folderId}` : "/add-link"}>
             <button className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 cursor-pointer">
               + Add Link
             </button>
@@ -72,27 +72,17 @@ const FolderDetail = () => {
         ) : (
           <>
             {/* Subfolders */}
-            {subfolders.length > 0 && (
-              <>
-                <h3 className="text-xl font-semibold text-slate-700 mb-4">
-                  Subfolders
-                </h3>
-                <div className="grid md:grid-cols-2 gap-6 mb-10">
-                  {subfolders.map((folder) => (
-                    <Link to={`/folders/${folder._id}`} key={folder._id}>
-                      <div className="p-6 bg-white shadow-md rounded-lg hover:shadow-lg transition cursor-pointer border border-orange-100">
-                        <div className="flex items-center gap-3">
-                          <FaFolderOpen className="text-orange-400 text-2xl" />
-                          <h2 className="text-lg font-semibold text-slate-800">
-                            {folder.name}
-                          </h2>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </>
-            )}
+            <div className="grid md:grid-cols-2 gap-6 mb-10">
+              {subfolders.map((folder) => (
+                <FolderCard
+                  key={folder._id}
+                  folder={folder}
+                  onDelete={(id) =>
+                    setSubfolders((prev) => prev.filter((f) => f._id !== id))
+                  }
+                />
+              ))}
+            </div>
 
             {/* Links */}
             {links.length > 0 && (

@@ -2,8 +2,10 @@ import { useState, useEffect, useContext } from "react";
 import { FaLink, FaSave } from "react-icons/fa";
 import axios from "axios";
 import { AuthContext } from "../context/AuthContext";
+import { useParams } from "react-router-dom";
 
 const AddLink = () => {
+  const { id: folderId } = useParams();
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const [folder, setFolder] = useState(null);
@@ -28,7 +30,7 @@ const AddLink = () => {
           },
         }
       );
-      navigate("/folders");
+      navigate(`/folders/${folderId}`, { replace: true });
     } catch (err) {
       console.error("Error adding link", err);
       alert("Failed to save link");
@@ -50,6 +52,7 @@ const AddLink = () => {
           }
         );
         setFolders(res.data.data.folders);
+        if (folderId) setFolder(folderId);
       } catch (err) {
         console.error("Error fetching folders", err);
       }

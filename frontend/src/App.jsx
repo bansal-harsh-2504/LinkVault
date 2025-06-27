@@ -25,6 +25,7 @@ const App = () => {
           <Route path="/edit-folder" element={<EditFolder />} />
           <Route path="/edit-folder/:id" element={<EditFolder />} />
           <Route path="/add-link" element={<AddLink />} />
+          <Route path="/add-link/:id" element={<AddLink />} />
           <Route path="/edit-link" element={<EditLink />} />
           <Route path="/edit-link/:id" element={<EditLink />} />
           <Route path="*" element={<NotFound />} />
