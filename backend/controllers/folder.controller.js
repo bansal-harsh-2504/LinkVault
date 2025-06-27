@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 
 export const getAllFolders = async (req, res) => {
     try {
-        const folders = await Folder.find({ userId: req.userId, parentFolderId: null });
+        const folders = await Folder.find({ userId: req.userId });
         res.status(200).json({
             success: true,
             data: { folders },
