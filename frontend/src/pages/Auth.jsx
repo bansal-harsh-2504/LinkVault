@@ -196,11 +196,11 @@ const Auth = () => {
                 className="w-full bg-orange-500 text-white py-2 rounded-lg font-semibold hover:bg-orange-600 transition"
               >
                 {isLogin ? (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2 cursor-pointer">
                     <MdOutlineLogin /> Login
                   </span>
                 ) : (
-                  <span className="flex items-center justify-center gap-2">
+                  <span className="flex items-center justify-center gap-2 cursor-pointer">
                     <MdPersonAddAlt1 /> Sign Up
                   </span>
                 )}

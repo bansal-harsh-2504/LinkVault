@@ -38,7 +38,7 @@ const Folders = ({ parentId }) => {
   };
 
   useEffect(() => {
-    if (isAuthLoading && !token) return;
+    if (isAuthLoading || !token) return;
     fetchFoldersAndLinks();
   }, [isAuthLoading, token]);
 
