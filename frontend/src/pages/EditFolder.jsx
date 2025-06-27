@@ -9,6 +9,8 @@ const EditFolder = () => {
   const { token, isAuthLoading } = useContext(AuthContext);
 
   const [name, setName] = useState("");
+  const [parentFolderId, setParentFolderId] = useState(null);
+  const [allFolders, setAllFolders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -17,7 +19,7 @@ const EditFolder = () => {
     try {
       await axios.put(
         `${import.meta.env.VITE_BASE_URL_BACKEND}/folders/${folderId}`,
-        { name },
+        { name, parentFolderId },
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -33,19 +35,29 @@ const EditFolder = () => {
 
   useEffect(() => {
     if (isAuthLoading || !token) return;
-    const fetchFolder = async () => {
-      if (!token || isAuthLoading) return;
+
+    const fetchData = async () => {
       try {
-        const res = await axios.get(
+        const folderRes = await axios.get(
           `${import.meta.env.VITE_BASE_URL_BACKEND}/folders/${folderId}`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
           }
         );
-        const { folder } = res.data.data;
+        const { folder } = folderRes.data.data;
         setName(folder.name || "");
+        setParentFolderId(folder.parentFolderId || "");
+
+        const allRes = await axios.get(
+          `${import.meta.env.VITE_BASE_URL_BACKEND}/folders`,
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          }
+        );
+
+        const all = allRes.data.data;
+        const filtered = all.filter((f) => f._id !== folderId);
+        setAllFolders(filtered);
       } catch (err) {
         setError("Failed to fetch folder details.");
         console.error(err);
@@ -53,7 +65,8 @@ const EditFolder = () => {
         setLoading(false);
       }
     };
-    fetchFolder();
+
+    fetchData();
   }, [folderId, token, isAuthLoading]);
 
   useEffect(() => {
@@ -86,6 +99,25 @@ const EditFolder = () => {
               className="w-full mt-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
           </div>
+
+          <div>
+            <label className="block mb-1 text-sm text-slate-700">
+              Parent Folder
+            </label>
+            <select
+              value={parentFolderId ? parentFolderId : ""}
+              onChange={(e) => setParentFolderId(e.target.value || null)}
+              className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
+            >
+              <option value="">None</option>
+              {allFolders.map((folder) => (
+                <option key={folder._id} value={folder._id}>
+                  {folder.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
           <button
             type="submit"
             className="bg-orange-500 text-white px-4 py-2 rounded-md hover:bg-orange-600 transition cursor-pointer"

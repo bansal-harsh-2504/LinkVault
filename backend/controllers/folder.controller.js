@@ -73,9 +73,9 @@ export const createFolder = async (req, res) => {
     }
 };
 
-export const updateFolderName = async (req, res) => {
+export const updateFolder = async (req, res) => {
     const { id: folderId } = req.params;
-    const { name } = req.body;
+    const { name, parentFolderId } = req.body;
 
     if (!mongoose.Types.ObjectId.isValid(folderId)) {
         return res.status(400).json({ success: false, message: "Invalid folder ID" });
@@ -84,7 +84,7 @@ export const updateFolderName = async (req, res) => {
     try {
         const updated = await Folder.findOneAndUpdate(
             { _id: folderId, userId: req.userId },
-            { $set: { name } },
+            { $set: { name, parentFolderId } },
             { new: true }
         );
 
