@@ -47,7 +47,7 @@ const AddFolder = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      const newFolderId = res.data.data.newFolder._id;
+      const newFolderId = res.data.data._id;
       navigate(`/folders/${newFolderId}`);
     } catch (err) {
       console.error("Failed to create folder", err);
