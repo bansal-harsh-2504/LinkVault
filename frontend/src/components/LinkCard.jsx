@@ -36,7 +36,7 @@ const LinkCard = ({ link, onDelete }) => {
       <div className="flex items-start justify-between gap-3 mb-1">
         <div className="flex flex-col max-w-[85%]">
           <span className="text-lg font-semibold text-slate-800 mb-1 truncate">
-            {link.title?.trim() || "title"}
+            {link.title?.trim()}
           </span>
           <div className="flex items-center gap-2">
             <FaLink className="text-orange-500 flex-shrink-0" />

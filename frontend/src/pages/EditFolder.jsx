@@ -55,8 +55,8 @@ const EditFolder = () => {
           }
         );
 
-        const all = allRes.data.data;
-        const filtered = all.filter((f) => f._id !== folderId);
+        const { folders } = allRes.data.data;
+        const filtered = folders.filter((f) => f._id !== folderId);
         setAllFolders(filtered);
       } catch (err) {
         setError("Failed to fetch folder details.");
