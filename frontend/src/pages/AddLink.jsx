@@ -30,7 +30,11 @@ const AddLink = () => {
           },
         }
       );
-      navigate(`/folders/${folderId}`, { replace: true });
+      if (folderId) {
+        navigate(`/folders/${folderId}`, { replace: true });
+      } else {
+        navigate("/folders", { replace: true });
+      }
     } catch (err) {
       console.error("Error adding link", err);
       alert("Failed to save link");
